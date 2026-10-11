@@ -31,7 +31,13 @@ log.setLevel(os.environ.get("LOG_LEVEL", "INFO"))
 REGION = os.environ.get("AWS_REGION", "ap-southeast-2")
 # New free-plan accounts get Bedrock inference unlocked region by region ("Operation not allowed"
 # elsewhere). We try a list in order and remember the first region that answers for this container.
-BEDROCK_REGIONS = [r.strip() for r in os.environ.get("BEDROCK_REGIONS", os.environ.get("BEDROCK_REGION", REGION)).split(",") if r.strip()]
+_env_regions = [r.strip() for r in os.environ.get("BEDROCK_REGIONS", os.environ.get("BEDROCK_REGION", REGION)).split(",") if r.strip()]
+# Every region where Nova Lite is served on demand. On an unverified account each one grants a single call,
+# so more regions means more demo runs; verified accounts simply stick to the first that answers.
+_KNOWN_NOVA_REGIONS = ["us-west-2", "eu-west-2", "us-east-1", "us-east-2", "eu-central-1", "ap-northeast-1",
+                       "ap-southeast-1", "ca-central-1", "eu-north-1", "ap-south-1", "ap-southeast-2"]
+BEDROCK_REGIONS = list(dict.fromkeys(_env_regions + _KNOWN_NOVA_REGIONS))
+_bedrock_blocked: set[str] = set()  # regions that answered "Operation not allowed" in this container
 BUCKET = os.environ["UPLOAD_BUCKET"]
 TABLE = os.environ["ESTIMATES_TABLE"]
 VISION_MODEL = os.environ.get("BEDROCK_VISION_MODEL", "amazon.nova-lite-v1:0")
@@ -51,19 +57,30 @@ _brt_clients: dict[str, Any] = {}
 _bedrock_region_ok: str | None = None
 
 
+# Optional: run Bedrock calls under a different (already verified) AWS account's IAM user.
+# Everything else stays in this account. Set via Terraform variables, never committed.
+_BEDROCK_KEY = os.environ.get("BEDROCK_ACCESS_KEY_ID") or None
+_BEDROCK_SECRET = os.environ.get("BEDROCK_SECRET_ACCESS_KEY") or None
+BEDROCK_CROSS_ACCOUNT = bool(_BEDROCK_KEY and _BEDROCK_SECRET)
+
+
 def _brt(region: str):
     if region not in _brt_clients:
-        _brt_clients[region] = boto3.client("bedrock-runtime", region_name=region, config=_cfg)
+        kwargs = {"region_name": region, "config": _cfg}
+        if BEDROCK_CROSS_ACCOUNT:
+            kwargs.update(aws_access_key_id=_BEDROCK_KEY, aws_secret_access_key=_BEDROCK_SECRET)
+        _brt_clients[region] = boto3.client("bedrock-runtime", **kwargs)
     return _brt_clients[region]
 
 
 def _bedrock_regions() -> list[str]:
-    if _bedrock_region_ok and _bedrock_region_ok in BEDROCK_REGIONS:
-        return [_bedrock_region_ok] + [r for r in BEDROCK_REGIONS if r != _bedrock_region_ok]
-    return list(BEDROCK_REGIONS)
+    live = [r for r in BEDROCK_REGIONS if r not in _bedrock_blocked]
+    if _bedrock_region_ok and _bedrock_region_ok in live:
+        return [_bedrock_region_ok] + [r for r in live if r != _bedrock_region_ok]
+    return live
 
 
-BEDROCK_BUDGET_MS = int(os.environ.get("BEDROCK_BUDGET_MS", "4500"))
+BEDROCK_BUDGET_MS = int(os.environ.get("BEDROCK_BUDGET_MS", "6500"))
 
 
 def _is_region_blocked(e: Exception) -> bool:
@@ -94,6 +111,9 @@ def bedrock_converse(models: list[str], content: list[dict], max_tokens: int, te
                 last_err = f"{region}/{model}: {code}"
                 log.warning("bedrock %s %s failed: %s", region, model, e)
                 if _is_region_blocked(e):
+                    _bedrock_blocked.add(region)
+                    if _bedrock_region_ok == region:
+                        _bedrock_region_ok = None
                     break  # whole region is closed for this account; try the next region
                 continue  # this model only; try the next model in the same region
             except Exception as e:  # noqa: BLE001
@@ -157,6 +177,7 @@ def handler(event: dict, context) -> dict:
         if path == "/health":
             return respond(200, {
                 "ok": True, "region": REGION, "bedrock_regions": BEDROCK_REGIONS, "bedrock_region_ok": _bedrock_region_ok,
+                "bedrock_cross_account": BEDROCK_CROSS_ACCOUNT, "bedrock_blocked": sorted(_bedrock_blocked),
                 "bucket": BUCKET, "table": TABLE,
                 "vision_model": VISION_MODEL, "text_model": TEXT_MODEL, "fallbacks": FALLBACKS,
             })
@@ -222,6 +243,16 @@ def analyze(body: dict) -> dict:
                      "detail": f"{len(lines)} text lines", "ms": _ms(t), "ok": True})
 
     ocr_text = "\n".join(l["text"] for l in lines)
+
+    # Refuse images that are clearly not electricity bills instead of inventing numbers.
+    if not looks_like_bill(ocr_text, len(lines)):
+        pipeline.append({"step": "bedrock", "service": "Amazon Bedrock", "api": "Converse",
+                         "detail": "skipped: image is not an electricity bill", "ms": 0, "ok": False})
+        return respond(422, {
+            "error": "not_a_bill",
+            "message": "This does not look like an electricity bill. Try a clear photo of the full bill, or one of the specimen bills.",
+            "lines": len(lines), "sample": [l["text"] for l in lines[:5]], "pipeline": pipeline,
+        })
 
     # 3. Bedrock: structured extraction (vision + OCR hints), with graceful degradation
     t = time.time()
@@ -323,6 +354,17 @@ def bedrock_extract(img: bytes, ocr_text: str) -> tuple[dict | None, str | None,
     return None, model, region, f"{region}/{model}: unparseable response"
 
 
+BILL_WORDS = ("unit", "kwh", "electric", "bijli", "vidyut", "power", "energy", "tariff", "sanctioned", "load",
+              "meter", "consum", "payable", "bill", "discom", "reading", "due date", "arrear", "fixed charge")
+
+
+def looks_like_bill(ocr_text: str, n_lines: int) -> bool:
+    low = ocr_text.lower()
+    hits = sum(1 for w in BILL_WORDS if w in low)
+    has_number = re.search(r"\d{2,}", low) is not None
+    return n_lines >= 4 and has_number and (hits >= 2 or detect_discom(low) is not None)
+
+
 def heuristic_extract(ocr_text: str) -> dict:
     """Regex-only fallback so the demo never dies if Bedrock is unavailable."""
     t = ocr_text.replace(",", "")
@@ -342,9 +384,10 @@ def heuristic_extract(ocr_text: str) -> dict:
     not_date = r"(?![\d\-/])"
     units = grab([
         r"units?\s*consumed\D{0,25}?(\d{2,5})" + not_date,
-        r"(?<![\d,.])(\d{2,5})\s*(?:kwh|units)\b",
-        r"(?:total\s*units|units\s*billed|billed\s*units|energy\s*consumed|net\s*units)\D{0,25}?(\d{2,5})" + not_date,
+        r"(?<![\d,.])(\d{2,5})\s*(?:kwh|units?)\b",
+        r"(?:total\s*units|units\s*billed|billed\s*units|energy\s*consumed|net\s*units|kwh\s*consumed|units\s*\(kwh\)|consumed\s*units)\D{0,25}?(\d{2,5})" + not_date,
         r"consumption\s*\(?\s*(?:kwh|units)?\s*\)?\s*[:\-]?\s*(\d{2,5})" + not_date,
+        r"(?:energy|units)\s*\(?\s*kwh\s*\)?\D{0,15}?(\d{2,5})" + not_date,
     ])
     if units is not None and units < 20:
         units = None

@@ -1,0 +1,12 @@
+# Copy this file to infra/terraform.tfvars (gitignored) and fill in the two values.
+# Only needed while this account's Bedrock access is still being verified by AWS.
+#
+# In a teammate's older, verified AWS account: IAM -> Users -> Create user "bill2solar-bedrock",
+# attach this inline policy, create an access key (CLI), paste both values below, then run
+#   cd infra && terraform plan -out=tfplan && terraform apply tfplan
+#
+# {"Version":"2012-10-17","Statement":[{"Effect":"Allow",
+#   "Action":["bedrock:InvokeModel","bedrock:InvokeModelWithResponseStream"],"Resource":"*"}]}
+
+bedrock_access_key_id     = "<access key id from the other account>"
+bedrock_secret_access_key = "<secret access key from the other account>"

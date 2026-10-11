@@ -22,6 +22,20 @@ variable "bedrock_text_model" {
   default     = "us.anthropic.claude-haiku-4-5-20251001-v1:0"
 }
 
+variable "bedrock_access_key_id" {
+  description = "Optional. Access key of an IAM user in a different, already-verified AWS account used only for Bedrock inference. Put it in infra/terraform.tfvars (gitignored)."
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
+variable "bedrock_secret_access_key" {
+  description = "Optional. Secret for bedrock_access_key_id."
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
 variable "bedrock_fallback_models" {
   description = "Tried in order when the primary model is denied or throttled."
   type        = list(string)

@@ -67,6 +67,16 @@ export type Proposal = {
 export const API_URL: string = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, '') ?? ''
 export const apiConfigured = API_URL.length > 0
 
+export class ApiError extends Error {
+  status: number
+  code?: string
+  constructor(status: number, message: string, code?: string) {
+    super(message)
+    this.status = status
+    this.code = code
+  }
+}
+
 async function post<T>(path: string, body: unknown): Promise<T> {
   const r = await fetch(`${API_URL}${path}`, {
     method: 'POST',
@@ -74,8 +84,14 @@ async function post<T>(path: string, body: unknown): Promise<T> {
     body: JSON.stringify(body),
   })
   if (!r.ok) {
-    const text = await r.text().catch(() => '')
-    throw new Error(`${path} failed: ${r.status} ${text.slice(0, 200)}`)
+    let code: string | undefined
+    let message = `${path} failed with ${r.status}`
+    try {
+      const j = (await r.json()) as { error?: string; message?: string }
+      code = j.error
+      message = j.message ?? message
+    } catch { /* non-JSON body */ }
+    throw new ApiError(r.status, message, code)
   }
   return (await r.json()) as T
 }

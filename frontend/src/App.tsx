@@ -5,7 +5,7 @@ import Pipeline from './components/Pipeline'
 import BillScan from './components/BillScan'
 import Results from './components/Results'
 import Proposal from './components/Proposal'
-import { analyze, apiConfigured, presign, proposal as fetchProposal, uploadToS3, API_URL, type AnalyzeResult, type Proposal as ProposalT } from './lib/api'
+import { analyze, apiConfigured, presign, proposal as fetchProposal, uploadToS3, API_URL, ApiError, type AnalyzeResult, type Proposal as ProposalT } from './lib/api'
 import { fetchAsBlob, prepareImage } from './lib/image'
 import { DEMO_RESULT, DEMO_PROPOSAL } from './demo/fallback'
 
@@ -49,9 +49,15 @@ export default function App() {
       setPropLoading(true)
       fetchProposal(r.id).then(setProp).catch(e => setError(String(e))).finally(() => setPropLoading(false))
     } catch (e) {
-      // Demo safety net: never show a dead screen on camera.
-      console.warn('API unavailable, using demo result', e)
       clearTimers()
+      // A 4xx is the API telling us something true (e.g. "not a bill"): say it, go back to the start.
+      if (e instanceof ApiError && e.status >= 400 && e.status < 500) {
+        setError(e.message)
+        setPhase('idle')
+        return
+      }
+      // Demo safety net for a dead API: never show a dead screen on camera.
+      console.warn('API unavailable, using demo result', e)
       setDemoMode(true)
       setResult(DEMO_RESULT)
       setPhase('scanned')
@@ -95,6 +101,7 @@ export default function App() {
       <AnimatePresence mode="wait">
         {phase === 'idle' && (
           <motion.div key="hero" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }}>
+            {error && <div className="error no-print">{error}</div>}
             <Hero onFile={onFile} onSample={onSample} busy={busy} />
           </motion.div>
         )}

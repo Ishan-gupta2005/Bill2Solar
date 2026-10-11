@@ -59,11 +59,11 @@ button { font: inherit; }
 .hero .facts b { display: block; color: var(--text); font-size: 20px; letter-spacing: -0.02em; }
 
 .drop {
-  position: relative; border: 2px dashed rgba(245, 183, 0, 0.55); border-radius: var(--radius); background: linear-gradient(180deg, rgba(245, 183, 0, 0.06), rgba(245, 183, 0, 0.02));
+  display: block; position: relative; border: 2px dashed rgba(245, 183, 0, 0.55); border-radius: var(--radius); background: linear-gradient(180deg, rgba(245, 183, 0, 0.06), rgba(245, 183, 0, 0.02));
   padding: 34px 28px; text-align: center; transition: border-color .2s, transform .2s, background .2s; cursor: pointer;
 }
 .drop:hover, .drop.over { border-color: var(--sun); background: rgba(245, 183, 0, 0.09); transform: translateY(-2px); }
-.drop input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.drop input { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none; clip: rect(0 0 0 0); }
 .drop .icon { width: 64px; height: 64px; border-radius: 18px; margin: 0 auto 14px; background: var(--sun-dim); display: grid; place-items: center; color: var(--sun); }
 .drop h3 { margin: 0 0 6px; font-size: 19px; letter-spacing: -0.01em; }
 .drop p { margin: 0; color: var(--muted); font-size: 14px; }

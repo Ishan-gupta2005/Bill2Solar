@@ -158,6 +158,8 @@ resource "aws_lambda_function" "api" {
       UPLOAD_BUCKET        = aws_s3_bucket.uploads.bucket
       ESTIMATES_TABLE      = aws_dynamodb_table.estimates.name
       BEDROCK_REGIONS      = join(",", var.bedrock_regions)
+      BEDROCK_ACCESS_KEY_ID     = var.bedrock_access_key_id
+      BEDROCK_SECRET_ACCESS_KEY = var.bedrock_secret_access_key
       BEDROCK_VISION_MODEL = var.bedrock_vision_model
       BEDROCK_TEXT_MODEL   = var.bedrock_text_model
       BEDROCK_FALLBACKS    = join(",", var.bedrock_fallback_models)
