@@ -1,0 +1,17 @@
+{
+  "env": {
+    "AWS_PROFILE": "envhack",
+    "AWS_REGION": "ap-southeast-2",
+    "AWS_DEFAULT_REGION": "ap-southeast-2"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(aws:*)",
+      "Bash(terraform:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(python:*)",
+      "Bash(pip:*)"
+    ]
+  }
+}

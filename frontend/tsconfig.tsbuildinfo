@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/components/billscan.tsx","./src/components/hero.tsx","./src/components/pipeline.tsx","./src/components/proposal.tsx","./src/components/results.tsx","./src/components/rooftop.tsx","./src/demo/fallback.ts","./src/lib/api.ts","./src/lib/image.ts","./src/lib/usecountup.ts"],"version":"5.8.3"}

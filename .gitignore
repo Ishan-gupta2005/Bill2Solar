@@ -1,0 +1,12 @@
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+.env
+.env.*
+node_modules/
+dist/
+build/
+*.csv
+*.zip
+__pycache__/

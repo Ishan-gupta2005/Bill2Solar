@@ -1,0 +1,594 @@
+{
+ "id": "5346c334789f",
+ "created_at": 1791707037,
+ "expires_at": 1792311837,
+ "key": "bills/20261011/d3742a6c25c64675bcc3ca09c3b4d39c.jpg",
+ "extraction": {
+  "discom": "BSES Rajdhani Power Ltd",
+  "state": "Delhi",
+  "city": "Delhi",
+  "billing_period": null,
+  "units_consumed": 312.0,
+  "sanctioned_load_kw": 3.0,
+  "bill_amount_rs": 2180.0,
+  "tariff_category": null,
+  "meter_type": null,
+  "confidence": 0.5,
+  "source": "heuristic",
+  "discom_code": "BSES-BRPL",
+  "tariff_hint": 6.5,
+  "discom_portal": "https://www.bsesdelhi.com"
+ },
+ "estimate": {
+  "monthly_units": 312,
+  "effective_tariff_rs_per_unit": 6.99,
+  "recommended_kw": 2.5,
+  "panel_count": 5,
+  "roof_sqft_needed": 250,
+  "monthly_generation_units": 300,
+  "gross_cost_rs": 150000,
+  "subsidy_rs": 69000,
+  "net_cost_rs": 81000,
+  "annual_savings_rs": 25154,
+  "monthly_savings_rs": 2096,
+  "payback_years": 3.2,
+  "lifetime_savings_rs": 504585,
+  "co2_tonnes_per_year": 2.58,
+  "trees_equivalent": 123,
+  "coverage_percent": 96,
+  "assumptions": {
+   "units_per_kw_per_day": 4.0,
+   "roof_sqft_per_kw": 100.0,
+   "grid_co2_kg_per_kwh": 0.716,
+   "export_rate_rs_per_unit": 3.0,
+   "installed_cost_rs_per_kw": 60000.0,
+   "scheme": "PM Surya Ghar Muft Bijli Yojana CFA: Rs 30k/kW up to 2 kW, Rs 18k for 3rd kW, cap Rs 78k",
+   "panel_watt": 540,
+   "system_life_years": 25
+  }
+ },
+ "field_boxes": {
+  "units": {
+   "width": 0.0732,
+   "height": 0.0114,
+   "left": 0.5,
+   "top": 0.4593
+  },
+  "amount": {
+   "width": 0.1602,
+   "height": 0.0207,
+   "left": 0.7246,
+   "top": 0.7272
+  },
+  "load": {
+   "width": 0.1357,
+   "height": 0.0107,
+   "left": 0.1143,
+   "top": 0.3429
+  },
+  "discom": {
+   "width": 0.4697,
+   "height": 0.0171,
+   "left": 0.1016,
+   "top": 0.065
+  }
+ },
+ "ocr": {
+  "lines": [
+   {
+    "id": 0,
+    "text": "BSES RAJDHANI POWER LIMITED",
+    "confidence": 100.0,
+    "box": {
+     "width": 0.4697,
+     "height": 0.0171,
+     "left": 0.1016,
+     "top": 0.065
+    }
+   },
+   {
+    "id": 1,
+    "text": "SPECIMEN BILL",
+    "confidence": 99.9,
+    "box": {
+     "width": 0.1416,
+     "height": 0.0107,
+     "left": 0.6865,
+     "top": 0.0671
+    }
+   },
+   {
+    "id": 3,
+    "text": "Electricity Bill Domestic Supply Delhi",
+    "confidence": 99.1,
+    "box": {
+     "width": 0.2637,
+     "height": 0.0121,
+     "left": 0.0996,
+     "top": 0.0929
+    }
+   },
+   {
+    "id": 2,
+    "text": "for demo purposes only",
+    "confidence": 98.7,
+    "box": {
+     "width": 0.1523,
+     "height": 0.0114,
+     "left": 0.6846,
+     "top": 0.0879
+    }
+   },
+   {
+    "id": 4,
+    "text": "Consumer Name:",
+    "confidence": 99.0,
+    "box": {
+     "width": 0.1436,
+     "height": 0.0114,
+     "left": 0.1006,
+     "top": 0.1429
+    }
+   },
+   {
+    "id": 5,
+    "text": "DEMO CONSUMER",
+    "confidence": 99.7,
+    "box": {
+     "width": 0.1699,
+     "height": 0.0121,
+     "left": 0.2861,
+     "top": 0.1429
+    }
+   },
+   {
+    "id": 6,
+    "text": "000000000000",
+    "confidence": 97.9,
+    "box": {
+     "width": 0.1299,
+     "height": 0.0121,
+     "left": 0.2852,
+     "top": 0.1629
+    }
+   },
+   {
+    "id": 7,
+    "text": "CA Number:",
+    "confidence": 99.5,
+    "box": {
+     "width": 0.0996,
+     "height": 0.0107,
+     "left": 0.1016,
+     "top": 0.165
+    }
+   },
+   {
+    "id": 8,
+    "text": "Address:",
+    "confidence": 98.0,
+    "box": {
+     "width": 0.0723,
+     "height": 0.0114,
+     "left": 0.0996,
+     "top": 0.1864
+    }
+   },
+   {
+    "id": 9,
+    "text": "Flat 000, Demo Apartments, Sample Nagar",
+    "confidence": 99.2,
+    "box": {
+     "width": 0.3489,
+     "height": 0.0171,
+     "left": 0.287,
+     "top": 0.1852
+    }
+   },
+   {
+    "id": 10,
+    "text": "CONNECTION & CONSUMPTION DETAILS",
+    "confidence": 98.5,
+    "box": {
+     "width": 0.3721,
+     "height": 0.0121,
+     "left": 0.0996,
+     "top": 0.2207
+    }
+   },
+   {
+    "id": 11,
+    "text": "Billing Period",
+    "confidence": 99.6,
+    "box": {
+     "width": 0.1071,
+     "height": 0.0149,
+     "left": 0.1149,
+     "top": 0.2536
+    }
+   },
+   {
+    "id": 12,
+    "text": "01-Sep-2026 to 30-Sep-2026",
+    "confidence": 99.3,
+    "box": {
+     "width": 0.2344,
+     "height": 0.0129,
+     "left": 0.5,
+     "top": 0.255
+    }
+   },
+   {
+    "id": 13,
+    "text": "Bill Date",
+    "confidence": 99.4,
+    "box": {
+     "width": 0.0664,
+     "height": 0.0107,
+     "left": 0.1162,
+     "top": 0.2843
+    }
+   },
+   {
+    "id": 14,
+    "text": "02-Oct-2026",
+    "confidence": 99.1,
+    "box": {
+     "width": 0.1035,
+     "height": 0.0121,
+     "left": 0.499,
+     "top": 0.2836
+    }
+   },
+   {
+    "id": 16,
+    "text": "Tariff Category",
+    "confidence": 99.7,
+    "box": {
+     "width": 0.1221,
+     "height": 0.0136,
+     "left": 0.1143,
+     "top": 0.3136
+    }
+   },
+   {
+    "id": 15,
+    "text": "Domestic (DS-1)",
+    "confidence": 99.9,
+    "box": {
+     "width": 0.1367,
+     "height": 0.0143,
+     "left": 0.501,
+     "top": 0.3129
+    }
+   },
+   {
+    "id": 18,
+    "text": "Sanctioned Load",
+    "confidence": 100.0,
+    "box": {
+     "width": 0.1357,
+     "height": 0.0107,
+     "left": 0.1143,
+     "top": 0.3429
+    }
+   },
+   {
+    "id": 17,
+    "text": "3 kW",
+    "confidence": 97.8,
+    "box": {
+     "width": 0.043,
+     "height": 0.0114,
+     "left": 0.5,
+     "top": 0.3422
+    }
+   },
+   {
+    "id": 19,
+    "text": "Meter Type",
+    "confidence": 99.7,
+    "box": {
+     "width": 0.0918,
+     "height": 0.0129,
+     "left": 0.1152,
+     "top": 0.3722
+    }
+   },
+   {
+    "id": 20,
+    "text": "Single Phase Smart Meter",
+    "confidence": 99.5,
+    "box": {
+     "width": 0.2133,
+     "height": 0.0154,
+     "left": 0.5008,
+     "top": 0.3701
+    }
+   },
+   {
+    "id": 21,
+    "text": "Previous Reading",
+    "confidence": 99.2,
+    "box": {
+     "width": 0.1442,
+     "height": 0.0162,
+     "left": 0.1149,
+     "top": 0.3992
+    }
+   },
+   {
+    "id": 22,
+    "text": "14,382 kWh",
+    "confidence": 100.0,
+    "box": {
+     "width": 0.0947,
+     "height": 0.0121,
+     "left": 0.502,
+     "top": 0.4014
+    }
+   },
+   {
+    "id": 23,
+    "text": "Current Reading",
+    "confidence": 98.9,
+    "box": {
+     "width": 0.1353,
+     "height": 0.0158,
+     "left": 0.1139,
+     "top": 0.4287
+    }
+   },
+   {
+    "id": 24,
+    "text": "14,694 kWh",
+    "confidence": 99.9,
+    "box": {
+     "width": 0.0947,
+     "height": 0.0121,
+     "left": 0.502,
+     "top": 0.4307
+    }
+   },
+   {
+    "id": 26,
+    "text": "Units Consumed",
+    "confidence": 100.0,
+    "box": {
+     "width": 0.1348,
+     "height": 0.0107,
+     "left": 0.1152,
+     "top": 0.46
+    }
+   },
+   {
+    "id": 25,
+    "text": "312 kWh",
+    "confidence": 99.5,
+    "box": {
+     "width": 0.0732,
+     "height": 0.0114,
+     "left": 0.5,
+     "top": 0.4593
+    }
+   },
+   {
+    "id": 27,
+    "text": "BILL DETAILS",
+    "confidence": 99.1,
+    "box": {
+     "width": 0.125,
+     "height": 0.0129,
+     "left": 0.1006,
+     "top": 0.5143
+    }
+   },
+   {
+    "id": 28,
+    "text": "Energy Charges",
+    "confidence": 99.3,
+    "box": {
+     "width": 0.1322,
+     "height": 0.0152,
+     "left": 0.1141,
+     "top": 0.5475
+    }
+   },
+   {
+    "id": 29,
+    "text": "1,744.00",
+    "confidence": 95.8,
+    "box": {
+     "width": 0.0908,
+     "height": 0.0179,
+     "left": 0.7969,
+     "top": 0.545
+    }
+   },
+   {
+    "id": 31,
+    "text": "Fixed Charges",
+    "confidence": 99.6,
+    "box": {
+     "width": 0.1182,
+     "height": 0.0136,
+     "left": 0.1152,
+     "top": 0.5743
+    }
+   },
+   {
+    "id": 30,
+    "text": "60.00",
+    "confidence": 98.6,
+    "box": {
+     "width": 0.0537,
+     "height": 0.0121,
+     "left": 0.832,
+     "top": 0.5729
+    }
+   },
+   {
+    "id": 32,
+    "text": "Pension Trust Surcharge",
+    "confidence": 99.5,
+    "box": {
+     "width": 0.2025,
+     "height": 0.0159,
+     "left": 0.1141,
+     "top": 0.5991
+    }
+   },
+   {
+    "id": 33,
+    "text": "126.00",
+    "confidence": 98.7,
+    "box": {
+     "width": 0.0645,
+     "height": 0.0114,
+     "left": 0.8213,
+     "top": 0.5993
+    }
+   },
+   {
+    "id": 34,
+    "text": "96.50",
+    "confidence": 98.3,
+    "box": {
+     "width": 0.0537,
+     "height": 0.0121,
+     "left": 0.832,
+     "top": 0.625
+    }
+   },
+   {
+    "id": 35,
+    "text": "Electricity Tax (5%)",
+    "confidence": 99.5,
+    "box": {
+     "width": 0.1582,
+     "height": 0.0136,
+     "left": 0.1143,
+     "top": 0.6264
+    }
+   },
+   {
+    "id": 37,
+    "text": "Subsidy (Delhi Govt)",
+    "confidence": 99.5,
+    "box": {
+     "width": 0.168,
+     "height": 0.0136,
+     "left": 0.1143,
+     "top": 0.6529
+    }
+   },
+   {
+    "id": 36,
+    "text": "0.00",
+    "confidence": 98.8,
+    "box": {
+     "width": 0.0449,
+     "height": 0.0121,
+     "left": 0.8418,
+     "top": 0.6514
+    }
+   },
+   {
+    "id": 39,
+    "text": "Late Payment Surcharge",
+    "confidence": 99.5,
+    "box": {
+     "width": 0.2012,
+     "height": 0.0136,
+     "left": 0.1143,
+     "top": 0.6793
+    }
+   },
+   {
+    "id": 38,
+    "text": "0.00",
+    "confidence": 99.6,
+    "box": {
+     "width": 0.043,
+     "height": 0.01,
+     "left": 0.8428,
+     "top": 0.6786
+    }
+   },
+   {
+    "id": 40,
+    "text": "TOTAL AMOUNT PAYABLE",
+    "confidence": 99.7,
+    "box": {
+     "width": 0.2432,
+     "height": 0.0114,
+     "left": 0.1133,
+     "top": 0.7279
+    }
+   },
+   {
+    "id": 41,
+    "text": "Rs. 2,180.00",
+    "confidence": 99.5,
+    "box": {
+     "width": 0.1602,
+     "height": 0.0207,
+     "left": 0.7246,
+     "top": 0.7272
+    }
+   },
+   {
+    "id": 42,
+    "text": "Pay online UPI Net",
+    "confidence": 99.0,
+    "box": {
+     "width": 0.1357,
+     "height": 0.012,
+     "left": 0.5707,
+     "top": 0.7769
+    }
+   }
+  ]
+ },
+ "pipeline": [
+  {
+   "step": "s3",
+   "service": "Amazon S3",
+   "detail": "191 KB fetched",
+   "ms": 46,
+   "ok": true
+  },
+  {
+   "step": "rekognition",
+   "service": "Amazon Rekognition",
+   "api": "DetectText",
+   "detail": "43 text lines",
+   "ms": 1273,
+   "ok": true
+  },
+  {
+   "step": "bedrock",
+   "service": "Amazon Bedrock",
+   "api": "Converse",
+   "detail": "unavailable (ap-southeast-2/amazon.nova-lite-v1:0: ValidationException); used heuristic parser",
+   "ms": 10428,
+   "ok": false,
+   "fallback": "heuristic"
+  },
+  {
+   "step": "dynamodb",
+   "service": "Amazon DynamoDB",
+   "api": "PutItem",
+   "detail": "estimate 5346c334789f saved",
+   "ms": 48,
+   "ok": true
+  }
+ ],
+ "proposal": {
+  "english": "Your BSES Rajdhani Power Ltd bill shows about 312 units a month. A 2.5 kW rooftop system with 5 panels on roughly 250 sq ft of shadow-free roof would generate close to that much every month.\n\nThe system costs about Rs 150,000. Under PM Surya Ghar Muft Bijli Yojana you receive Rs 69,000 directly in your bank account, so your net cost is about Rs 81,000. You save around Rs 2,096 every month, which pays the system back in about 3.2 years, after which the electricity is free for another 20 years.\n\nYou also avoid about 2.58 tonnes of CO2 a year, the work of 123 trees. Next step: register on pmsuryaghar.gov.in, choose an empanelled vendor, and your DISCOM will install a net meter.",
+  "hindi": "आपके BSES Rajdhani Power Ltd बिल में हर महीने लगभग 312 यूनिट खपत दिख रही है। 2.5 किलोवाट का रूफटॉप सोलर सिस्टम, 5 पैनल और करीब 250 वर्ग फुट छाया-मुक्त छत पर, हर महीने लगभग इतनी ही बिजली बना देगा।\n\nसिस्टम की कीमत लगभग ₹150,000 है। पीएम सूर्य घर मुफ्त बिजली योजना में ₹69,000 की सब्सिडी सीधे आपके बैंक खाते में आएगी, यानी आपकी असली लागत करीब ₹81,000 होगी। हर महीने लगभग ₹2,096 की बचत होगी और करीब 3.2 साल में पूरा पैसा वापस आ जाएगा। उसके बाद 20 साल तक बिजली मुफ्त।\n\nसाथ ही हर साल करीब 2.58 टन CO2 कम होगा, जो 123 पेड़ों के बराबर है। अगला कदम: pmsuryaghar.gov.in पर रजिस्टर करें, सूचीबद्ध वेंडर चुनें, और आपकी बिजली कंपनी नेट मीटर लगा देगी।",
+  "source": "template",
+  "error": "ap-southeast-2/amazon.nova-pro-v1:0: ValidationException",
+  "ms": 3397
+ }
+}
